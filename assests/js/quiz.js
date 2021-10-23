@@ -1,3 +1,5 @@
+var nextQuestion=-1;
+
 var questions =[
     {
         question:"Which is not not a way JavaScript code can be involved in an HTML file?",
@@ -24,4 +26,42 @@ answer:"True"
     choices: ["Google","Java", "Netscape","Goodyear"],
     answer:"Netscape"
 },
-]
+{
+question:"What does it mean to be a full-stack web developer?",
+choices:["Knowledgeable in both the front end and back end of an application","Eats pancakes once a week","Only knows hows to plug in ethernet cord", "Not a real thing"],
+answer:"Knowledgeable in both the front end and back end of an application"
+}
+
+];
+var questionsel=0
+var startBtn=document.querySelector("#start")
+const currenttime=document.querySelector("#timer");
+var time =75;
+var timer;
+startBtn.addEventListener("click", ()=>{
+timer=setInterval(()=>{
+    time=time-1
+    currenttime.textContent=time
+},1000)
+displayQuestion();
+})
+
+
+function displayQuestion(){
+var currentquestion=questions[questionsel]
+var showquestion=currentquestion.question
+var showchoices=currentquestion.choices
+document.querySelector(".question").textContent=showquestion
+}
+
+var respondsEl=document.querySelector("#responds");
+
+function rightAnswer(){
+    respondsEl.textContent ="You are Correct!:"+questions[nextQuestion].answer;
+respondsEl.setAttribute("class","responds");
+setTimeout(function(){
+    respondsEl.setAttribute("class","hide");
+},0)
+nextNewQuestion();
+
+}
