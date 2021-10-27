@@ -1,4 +1,4 @@
-var nextQuestion=-1;
+var displayQuestion=-1;
 
 var questions =[
     {
@@ -48,11 +48,28 @@ displayQuestion();
 
 
 function displayQuestion(){
-var currentquestion=questions[questionsel]
-var showquestion=currentquestion.question
-var showchoices=currentquestion.choices
-document.querySelector(".question").textContent=showquestion
+    displayQuestion++;
+    if (displayQuestion>questions.length-1){
+       quizDone();
+        return;
+    }
+    var quiz="<h2>"+questions[displayQuestion].question+"</h2>"
+   for (var i=0;i<questions[displayQuestion].choices.length;i++) {
+    choiceBtn=choiceBtn.replace("[CHOICE]",questions[displayQuestion].choices[i]);
+    if(questions[displayQuestion].choices[i]=== questions[displayQuestion].answer) {
+        choiceBtn=choiceBtn.replace("[anwerchoice]","rightAnswer()"); 
+    }else{
+        choiceBtn=choiceBtn.replace("[anwerchoice]", "wrongAnswer()"); 
+    } 
+    quiz+=choiceBtn
 }
+document.getElementsByClassName("quiz").innerHTML=quiz;
+}
+// var currentquestion=questions[questionsel]
+// var showquestion=currentquestion.question
+// var showchoices=currentquestion.choices
+// document.querySelector(".question").textContent=showquestion
+// }
 
 var respondsEl=document.querySelector("#responds");
 
@@ -62,6 +79,17 @@ respondsEl.setAttribute("class","responds");
 setTimeout(function(){
     respondsEl.setAttribute("class","hide");
 },0)
-nextNewQuestion();
+displayQuestion();
 
+}
+
+function quizDone(){
+    clearInterval(quizTimer);
+    var scoreinfo=~("Highscore", "");
+    <h2>~+localStorage.getItem</h2>
+};
+
+function resetGame(){
+    clearInterval(quizDone);
+    displayQuestion=-1;
 }
