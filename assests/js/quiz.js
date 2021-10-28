@@ -1,4 +1,7 @@
 var displayQuestion=-1;
+var finalscore=0;
+var timeleft=0;
+
 
 var questions =[
     {
@@ -38,22 +41,22 @@ var startBtn=document.querySelector("#start")
 const currenttime=document.querySelector("#timer");
 var time =75;
 var timer;
-startBtn.addEventListener("click", ()=>{
-timer=setInterval(()=>{
-    time=time-1
-    currenttime.textContent=time
-},1000)
-displayQuestion();
-})
+
+
+
 
 
 function displayQuestion(){
     displayQuestion++;
+
+
+// var time =75;
+// var timer;
     if (displayQuestion>questions.length-1){
        quizDone();
         return;
     }
-    var quiz="<h2>"+questions[displayQuestion].question+"</h2>"
+    var quizDone="<h2>"+questions[displayQuestion].question+"</h2>"
    for (var i=0;i<questions[displayQuestion].choices.length;i++) {
     choiceBtn=choiceBtn.replace("[CHOICE]",questions[displayQuestion].choices[i]);
     if(questions[displayQuestion].choices[i]=== questions[displayQuestion].answer) {
@@ -65,6 +68,34 @@ function displayQuestion(){
 }
 document.getElementsByClassName("quiz").innerHTML=quiz;
 }
+
+
+//this to start quiz
+
+startBtn.addEventListener("click", ()=>{
+    timeleft=75
+    var questionsel=0
+    var startBtn=document.querySelector("#start")
+    const currenttime=document.querySelector("#timer");
+
+    document.getElementById("timer").innerHTML+"seconds;"
+
+quiztimer=setInterval(()=>{
+    time=time-1
+
+    // timeleft--;
+    currenttime.textContent=time;
+    if(time<=0){
+        clearInterval(quizTimer);
+        window.alert("Time ran out, Game over");
+        displayQuestion();
+    }
+},1000);
+displayQuestion();
+})
+
+
+
 // var currentquestion=questions[questionsel]
 // var showquestion=currentquestion.question
 // var showchoices=currentquestion.choices
@@ -85,11 +116,28 @@ displayQuestion();
 
 function quizDone(){
     clearInterval(quizTimer);
-    var scoreinfo=~("Highscore", "");
-    <h2>~+localStorage.getItem</h2>
-};
+
+var details=`
+ <h2>Finished</h2> 
+<p>Your score is ` + finalscore + `.</p>
+<p>Enter your intials</p>
+<input type ="text" id="name" class="intials">
+<button onclick="savescore()" class="savescorebtn" title="Submit Score">Submit</button>`;
+   
+   document.getElementById("start").innerHTML=details;
+}
+    
+    
+//     var scoreinfo=~("savescore", "");
+//     <h2>~+localStorage.getItem</h2>
+// };
 
 function resetGame(){
     clearInterval(quizDone);
     displayQuestion=-1;
 }
+function getscore(){
+    localStorage.setItem("score",finalscore);
+    localStorage.setItem("name")+`</h1><br ></br>
+    `
+};
